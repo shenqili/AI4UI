@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>一物一控 — film</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:Inter,"SF Pro Display","Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+/* ANTI-SHAKE: #stage transform is ONLY the viewer fit (none at 1920x1080); #inner and .fscene never get a transform except finale tiles (static) */
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:center;overflow:hidden;background:#0b0c10}
+#inner{position:absolute;inset:0}
+.fscene{position:absolute;left:0;top:0;width:1920px;height:1080px;display:none;overflow:hidden}
+.froot{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden}
+.missing{position:absolute;inset:0;display:grid;place-items:center;color:#667;font-size:40px;letter-spacing:.1em}
+#hud-label{position:absolute;left:64px;top:52px;font-size:22px;font-weight:600;letter-spacing:.28em;color:rgba(255,255,255,.9);mix-blend-mode:difference;pointer-events:none;white-space:nowrap}
+#hud-dots{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);display:flex;gap:14px;mix-blend-mode:difference;pointer-events:none}
+#hud-dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.28)}
+#hud-dots i.on{background:#fff}
+#hud-barw{position:absolute;left:64px;right:64px;bottom:20px;height:3px;background:rgba(255,255,255,.16);mix-blend-mode:difference;pointer-events:none}
+#hud-bar{height:100%;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
+.hudmin #hud-dots,.hudmin #hud-barw{display:none}
+.nohud #hud-label,.nohud #hud-dots,.nohud #hud-barw{display:none}
+#play{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(0,0,0,.45);color:#fff;font-size:34px;letter-spacing:.2em}
+#play b{padding:26px 54px;border:2px solid rgba(255,255,255,.6);border-radius:999px;font-weight:500}
+.hasT #play{display:none}
+#shakeout{position:absolute;left:0;top:0;z-index:99;color:#0f0;font-size:14px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="inner"></div>
+  <div id="hud-label"></div>
+  <div id="hud-dots"><i></i><i></i><i></i><i></i></div>
+  <div id="hud-barw"><div id="hud-bar"></div></div>
+  <div id="play"><b>PLAY WITH SOUND</b></div>
+</div>
+<audio id="audio" src="audio/mix.mp3" preload="auto"></audio>
+<script>var Q=new URLSearchParams(location.search);if(Q.has('t')||Q.has('solo')||Q.has('shake'))document.body.classList.add('hasT')</script>
+<script src="cues.js"></script>
+<script src="engine.js"></script>
+<script src="scenes/s00_opener.js"></script>
+<script src="scenes/s01_pudding.js"></script>
+<script src="scenes/s02_pixelroom.js"></script>
+<script src="scenes/s03_stamp.js"></script>
+<script src="scenes/s04_fan.js"></script>
+<script src="scenes/s05_knob.js"></script>
+<script src="scenes/s06_sand.js"></script>
+<script src="scenes/s07_cards.js"></script>
+<script src="scenes/s08_lens.js"></script>
+<script src="scenes/s09_blind.js"></script>
+<script src="scenes/s10_pinwheel.js"></script>
+<script src="scenes/s11_firefly.js"></script>
+<script src="scenes/s12_postbox.js"></script>
+<script>/* scene modules register on load; re-render once they exist */
+if(Q.has('t'))Film.renderAt(parseFloat(Q.get('t')));</script>
+</body>
+</html>
